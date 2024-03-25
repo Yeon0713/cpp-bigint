@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 
 std::string sum(std::string x, std::string y){
 
@@ -52,9 +51,13 @@ std::string sum(std::string x, std::string y){
         result_str += std::to_string(up_num);
     }
 
-    std::reverse(result_str.begin(), result_str.end());
+    std::string result;
 
-    return result_str;
+    for (int i = 0; i < big_num.size() + 1; i++){
+        result += result_str[big_num.size() - i];
+    }
+
+    return result;
 
 }
 
@@ -66,7 +69,10 @@ std::string sub(std::string x, std::string y) {
     std::string big_num;
     std::string small_num;
 
-    if (num1.size() >= num2.size()) {
+    if (x == y){
+        return "0";
+    }
+    if (num1.size() > num2.size()) {
         big_num = num1;
         small_num = num2;
     }
@@ -109,34 +115,56 @@ std::string sub(std::string x, std::string y) {
         result_str += "";
     }
     else if (x.size() == y.size()){
-        if(int(x[0] - '0') * 100 + int(x[1] - '0') * 10 + int(x[2] - '0') >= int(y[0] - '0') * 100 + int(y[1] - '0') * 10 + int(y[2] - '0')){
-            result_str += "";
+        for(int i = 0; i < x.size(); i++){
+            if (int(x[i] - '0') > int(y[i] - '0')){
+                result_str += "";
+            }
+            else if (int(x[i] - '0') < int(y[i] - '0')){
+                result_str += "-";
+            }
         }
-        else {
-            result_str += "-";
-        }
+        
     }
     else {
         result_str += "-";
     }
 
-    std::reverse(result_str.begin(), result_str.end());
+    std::string result;
 
-    int i = 0;
-    int result_size = result_str.size();
+    for (int i = 0; i < big_num.size() + 1; i++){
+        result += result_str[big_num.size() - i];
+    }
 
-    while (i < result_size - 1) {
-        if (int(result_str[0] - '0') == 0) {
-            result_str.erase(result_str.begin());
+    int result_size = result.size();
+
+    if (int(result[0]) == int('-')){
+        int i = 0;
+        while (i < result_size - 1){
+            if (int(result[1] - '0') == 0) {
+                result.erase(result.begin() + 1);
+            }
+            else{
+                break;
+            }
+            i++;
         }
-        else {
-            break;
+        
+    }
+    else{
+        int i = 0;
+        while (i < result_size - 1) {
+            if (int(result[0] - '0') == 0) {
+                result.erase(result.begin());
+            }
+            else {
+                break;
+            }
+            i++;
         }
-        i++;
     }
     
     
-    return result_str;
+    return result;
 }
 
 
